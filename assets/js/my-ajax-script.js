@@ -2,27 +2,25 @@ jQuery(document).ready(function($) {
     $('#my-form').on('submit', function(e) {
         e.preventDefault();
 
-        var formData = new FormData(this); // Collect form data
-        formData.append('action', 'my_form_save_data'); // Append the action
-        formData.append('security', ajax_object.security); // Append nonce from localized script
+        var formData = new FormData(this);
+        formData.append('action', 'handle_invoice_general_setting');
+        formData.append('nonce', my_ajax_obj.nonce);
 
-        // Start AJAX request
         $.ajax({
-            url: ajax_object.ajax_url, // Use the localized admin-ajax URL
+            url: my_ajax_obj.ajax_url,
             type: 'POST',
             data: formData,
-            contentType: false, // Required for FormData
-            processData: false, // Required for FormData
+            contentType: false,
+            processData: false,
             success: function(response) {
                 if (response.success) {
-                    alert(response.data); // Success message
+                    alert(response.data.message);
                 } else {
-                    alert('There was an error processing the request.');
+                    alert('Error: ' + response.data.message);
                 }
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText); // For debugging errors
-                alert('An AJAX error occurred: ' + error);
+            error: function() {
+                alert('An error occurred.');
             }
         });
     });
