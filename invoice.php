@@ -53,14 +53,13 @@ add_action('admin_enqueue_scripts', 'wpac_plugin_script');
 require_once(plugin_dir_path(__FILE__) . 'includes/invoice-list.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/add_invoice.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/general_setting.php');
-require_once(plugin_dir_path(__FILE__) . 'db.php');
 
 /**
  * Create a custom database table for the plugin.
  */
 
 // Hook to the activation event
-register_activation_hook(__FILE__, 'create_admin_details_table');
+
 
 /**
  * Add menu items to the WordPress admin dashboard.
@@ -110,3 +109,38 @@ add_action('admin_menu', 'wpac_add_admin_menu');
 
 
 
+
+
+
+function create_invoice_table() {
+    global $wpdb;
+    
+    // Define table name with prefix
+    $table_name = $wpdb->prefix . 'invoice_table';
+
+    // SQL to create the table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        firstnamez varchar(255) NOT NULL,
+        lastname varchar(255) NOT NULL,
+        companyNames varchar(255) NOT NULL,
+        addressz varchar(255) NOT NULL,
+        cityz varchar(255) NOT NULL,
+        statez varchar(255) NOT NULL,
+        pincodez varchar(10) NOT NULL,
+        gstz varchar(15) NOT NULL,
+        company_logo_url varchar(255) DEFAULT '' NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    // Include the upgrade functions to create the table
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    
+    // Create or update the table
+    dbDelta($sql);
+}
+
+// Hook into the plugin activation to create the table
+register_activation_hook(__FILE__, 'create_invoice_table');

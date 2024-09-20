@@ -12,6 +12,7 @@ function invoice_general_setting($content)
     $pincode = get_option('pincodez', '');
     $gst = get_option('gstz', '');
 
+
     // Generate nonce for security
     $nonce = wp_create_nonce('invoice_general_setting_nonce');
 ?>
@@ -19,73 +20,81 @@ function invoice_general_setting($content)
         <h1 class="fs-4">General Setting</h1>
     </div>
 
-    <form id="my-form" method="post" enctype="multipart/form-data">
-        <div class="container p-2">
-            <div class="bg-white p-3 shadow-sm rounded">
-                <h2 class="fs-5">Admin Details</h2>
-                <div class="row">
-                    <!-- First Name -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="fname" class="form-label">First Name</label>
-                        <input type="text" id="fname" name="firstnamez" class="form-control" value="<?php echo esc_attr($first_name); ?>" placeholder="Your name..">
-                    </div>
 
-                    <!-- Last Name -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="lname" class="form-label">Last Name</label>
-                        <input type="text" id="lname" name="lastname" class="form-control" value="<?php echo esc_attr($last_name); ?>" placeholder="Your last name..">
-                    </div>
+   
+    <?php
+$general_setting = array(); // Define an empty array or pass a valid argument
+$general_setting = fetch_invoice_data($general_setting);
+?>
 
-                    <!-- Company Name -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="companyName" class="form-label">Company Name</label>
-                        <input type="text" id="companyName" name="companyNames" class="form-control" value="<?php echo esc_attr($company_name); ?>" placeholder="Your Company Name">
-                    </div>
+    <form id="my-form" method="post" action="<?= esc_url(admin_url('admin-ajax.php')); ?>" enctype="multipart/form-data">
+    <div class="container p-2">
+        <div class="bg-white p-3 shadow-sm rounded">
+            <h2 class="fs-5">Admin Details</h2>
+            <div class="row">
+                <!-- First Name -->
+                <div class="col-lg-6 mb-3">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" name="firstnamez" placeholder="Your name.." value="<?php echo esc_attr($general_setting['firstnamez']); ?>">
 
-                    <!-- Company Address -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="address" class="form-label">Company Address</label>
-                        <input type="text" id="address" name="addressz" class="form-control" value="<?php echo esc_attr($company_address); ?>" placeholder="Your Company Address..">
-                    </div>
+                </div>
 
-                    <!-- City -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" id="city" name="cityz" class="form-control" value="<?php echo esc_attr($city); ?>" placeholder="Your City">
-                    </div>
+                <!-- Last Name -->
+                <div class="col-lg-6 mb-3">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input type="text" id="lname" name="lastname" class="form-control" value="<?php echo esc_attr($general_setting['lastname']); ?>" placeholder="Your last name..">
+                </div>
 
-                    <!-- State -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="state" class="form-label">State</label>
-                        <input type="text" id="state" name="statez" class="form-control" value="<?php echo esc_attr($state); ?>" placeholder="Your State..">
-                    </div>
+                <!-- Company Name -->
+                <div class="col-lg-6 mb-3">
+                    <label for="companyName" class="form-label">Company Name</label>
+                    <input type="text" id="companyName" name="companyNames" class="form-control" value="<?php echo esc_attr($general_setting['companyNames']); ?>" placeholder="Your Company Name">
+                </div>
 
-                    <!-- Pincode -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="pincode" class="form-label">Pincode</label>
-                        <input type="text" id="pincode" name="pincodez" class="form-control" value="<?php echo esc_attr($pincode); ?>" placeholder="Pincode">
-                    </div>
+                <!-- Company Address -->
+                <div class="col-lg-6 mb-3">
+                    <label for="address" class="form-label">Company Address</label>
+                    <input type="text" id="address" name="addressz" class="form-control" value="<?php echo esc_attr($general_setting['addressz']); ?>" placeholder="Your Company Address..">
+                </div>
 
-                    <!-- GST -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="gst" class="form-label">GST</label>
-                        <input type="text" id="gst" name="gstz" class="form-control" value="<?php echo esc_attr($gst); ?>" placeholder="Your GST Number">
-                    </div>
+                <!-- City -->
+                <div class="col-lg-6 mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" id="city" name="cityz" class="form-control" value="<?php echo esc_attr($general_setting['cityz']); ?>" placeholder="Your City">
+                </div>
 
-                    <!-- Company Logo -->
-                    <div class="col-lg-6 mb-3">
-                        <label for="fileInput" class="form-label">Your Company Logo</label>
-                        <input type="file" id="fileInput" name="fileuplordz" class="form-control">
-                    </div>
+                <!-- State -->
+                <div class="col-lg-6 mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" id="state" name="statez" class="form-control" value="<?php echo esc_attr($general_setting['statez']); ?>" placeholder="Your State..">
+                </div>
 
-                    <!-- Submit Button -->
-                    <div class="col-lg-12">
-                        <input type="submit" value="Submit">
-                    </div>
+                <!-- Pincode -->
+                <div class="col-lg-6 mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input type="text" id="pincode" name="pincodez" class="form-control" value="<?php echo esc_attr($general_setting['pincodez']); ?>" placeholder="Pincode">
+                </div>
+
+                <!-- GST -->
+                <div class="col-lg-6 mb-3">
+                    <label for="gst" class="form-label">GST</label>
+                    <input type="text" id="gst" name="gstz" class="form-control" value="<?php echo esc_attr($general_setting['gstz']); ?>" placeholder="Your GST Number">
+                </div>
+
+                <!-- Company Logo -->
+                <div class="col-lg-6 mb-3">
+                    <label for="fileInput" class="form-label">Your Company Logo</label>
+                    <input type="file" id="fileInput" name="fileuplordz" class="form-control">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-lg-12">
+                    <input type="submit" value="Submit">
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 <?php
 }
 function handle_invoice_general_setting_ajax() {
@@ -153,7 +162,32 @@ function enqueue_my_custom_script() {
     wp_enqueue_script('my-custom-script', plugin_dir_url(__FILE__) . 'js/my-custom-script.js', array('jquery'), null, true);
     wp_localize_script('my-custom-script', 'my_ajax_obj', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('invoice_general_setting_nonce')
+        'nonce'    => wp_create_nonce('invoice_general_setting_nonce'),
+        'fetch_nonce' => wp_create_nonce('fetch_invoice_data_nonce')
     ));
 }
 add_action('admin_enqueue_scripts', 'enqueue_my_custom_script');
+
+
+
+
+function fetch_invoice_data($general_setting) {
+    global $wpdb;
+
+    // Retrieve the existing record from the database
+    $table_name = $wpdb->prefix . 'invoice_table'; // Adjust the table name as needed
+    $invoice_data = $wpdb->get_row("SELECT * FROM $table_name WHERE id = 1"); // Adjust the WHERE clause as needed
+
+    // Return the fetched data, or default values if no data found
+    return array(
+        'firstnamez' => $invoice_data->firstnamez ?? '',
+        'lastname'    => $invoice_data->lastname ?? '',
+        'companyNames'=> $invoice_data->companyNames ?? '',
+        'addressz'    => $invoice_data->addressz ?? '',
+        'cityz'       => $invoice_data->cityz ?? '',
+        'statez'      => $invoice_data->statez ?? '',
+        'pincodez'    => $invoice_data->pincodez ?? '',
+        'gstz'        => $invoice_data->gstz ?? '',
+        'company_logo_url' => $invoice_data->company_logo_url ?? '',
+    );
+}
