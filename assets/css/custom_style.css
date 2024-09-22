@@ -42,9 +42,112 @@ input[type=text], select, textarea{
     clear: both;
   }
 
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.invoice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 40px;
+    margin-top: 50px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.logo-invoice img{
+    width: 40%;
+    height: auto;
+}
+.invoice-title {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+.company-info {
+    margin-bottom: 20px;
+    width: 50%;
+}
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+label {
+display: flex!important;
+height: 8px;
+align-items: center;
+}
+input[type="text"]{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="date"]{
+  width: 70%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+.additional-info {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.bank-details, .payment-details {
+    width: 40%;
+}
+.payment-row {
+    margin-bottom: 5px;
+}
+.checkbox-group {
+    display: inline-block;
+    margin-right: 10px;
+}
 
 
+.text-center-invoice{
+  text-align: center!important;
+}
+
+.pt{
+
+  padding-top: 20px!important;
+}
   
+.pb-20{
+
+  padding-bottom: 20px;
+}
+.pb-10{
+
+  padding-bottom: 10px;
+}
   
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
   @media screen and (max-width: 600px) {

@@ -1,16 +1,18 @@
 <?php
 
+
+
 function invoice_general_setting($content)
 {
     // Retrieve stored options
-    $first_name = get_option('firstnamez', '');
-    $last_name = get_option('lastname', '');
-    $company_name = get_option('companyNames', '');
-    $company_address = get_option('addressz', '');
-    $city = get_option('cityz', '');
-    $state = get_option('statez', '');
-    $pincode = get_option('pincodez', '');
-    $gst = get_option('gstz', '');
+    $first_name = get_option('name', '');
+    $last_name = get_option('email', '');
+    $company_name = get_option('telphone', '');
+    $company_address = get_option('address', '');
+    $city = get_option('accountno', '');
+    $state = get_option('ifscode', '');
+    $pincode = get_option('accountholder', '');
+    $gst = get_option('abnnumber', '');
 
 
     // Generate nonce for security
@@ -27,74 +29,70 @@ $general_setting = array(); // Define an empty array or pass a valid argument
 $general_setting = fetch_invoice_data($general_setting);
 ?>
 
-    <form id="my-form" method="post" action="<?= esc_url(admin_url('admin-ajax.php')); ?>" enctype="multipart/form-data">
+<form id="my-form" method="post" action="<?= esc_url(admin_url('admin-ajax.php')); ?>" enctype="multipart/form-data">
     <div class="container p-2">
         <div class="bg-white p-3 shadow-sm rounded">
             <h2 class="fs-5">Admin Details</h2>
             <div class="row">
-                <!-- First Name -->
+                <!-- Name -->
                 <div class="col-lg-6 mb-3">
-                    <label for="fname" class="form-label">First Name</label>
-                    <input type="text" name="firstnamez" placeholder="Your name.." value="<?php echo esc_attr($general_setting['firstnamez']); ?>">
-
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" name="name" placeholder="Your name.." value="<?php echo esc_attr($general_setting['name']); ?>">
                 </div>
 
-                <!-- Last Name -->
+                <!-- Email -->
                 <div class="col-lg-6 mb-3">
-                    <label for="lname" class="form-label">Last Name</label>
-                    <input type="text" id="lname" name="lastname" class="form-control" value="<?php echo esc_attr($general_setting['lastname']); ?>" placeholder="Your last name..">
+                    <label for="lname" class="form-label">Email</label>
+                    <input type="email" id="lname" name="email" class="form-control" value="<?php echo esc_attr($general_setting['email']); ?>" placeholder="Your email.." required>
+ 
                 </div>
 
-                <!-- Company Name -->
+                <!-- Phone Number -->
                 <div class="col-lg-6 mb-3">
-                    <label for="companyName" class="form-label">Company Name</label>
-                    <input type="text" id="companyName" name="companyNames" class="form-control" value="<?php echo esc_attr($general_setting['companyNames']); ?>" placeholder="Your Company Name">
+                    <label for="companyName" class="form-label">Phone Number</label>
+                    <input type="tel" id="companyName" name="telphone" class="form-control" value="<?php echo esc_attr($general_setting['telphone']); ?>" placeholder="Your phone number.." pattern="[0-9]*" inputmode="numeric">
+
                 </div>
 
                 <!-- Company Address -->
                 <div class="col-lg-6 mb-3">
                     <label for="address" class="form-label">Company Address</label>
-                    <input type="text" id="address" name="addressz" class="form-control" value="<?php echo esc_attr($general_setting['addressz']); ?>" placeholder="Your Company Address..">
+                    <input type="text" id="address" name="address" class="form-control" value="<?php echo esc_attr($general_setting['address']); ?>" placeholder="Your Company Address..">
                 </div>
 
-                <!-- City -->
+                <!-- Bank Account -->
                 <div class="col-lg-6 mb-3">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" id="city" name="cityz" class="form-control" value="<?php echo esc_attr($general_setting['cityz']); ?>" placeholder="Your City">
+                    <label for="city" class="form-label">Bank Account</label>
+                    <input type="text" id="city" name="accountno" class="form-control" value="<?php echo esc_attr($general_setting['accountno']); ?>" placeholder="Your Bank Account..">
                 </div>
 
-                <!-- State -->
+                <!-- Bank IFSC Code -->
                 <div class="col-lg-6 mb-3">
-                    <label for="state" class="form-label">State</label>
-                    <input type="text" id="state" name="statez" class="form-control" value="<?php echo esc_attr($general_setting['statez']); ?>" placeholder="Your State..">
+                    <label for="state" class="form-label">Bank IFSC Code</label>
+                    <input type="text" id="state" name="ifscode" class="form-control" value="<?php echo esc_attr($general_setting['ifscode']); ?>" placeholder="Your IFSC Code..">
                 </div>
 
-                <!-- Pincode -->
+                <!-- Account Name -->
                 <div class="col-lg-6 mb-3">
-                    <label for="pincode" class="form-label">Pincode</label>
-                    <input type="text" id="pincode" name="pincodez" class="form-control" value="<?php echo esc_attr($general_setting['pincodez']); ?>" placeholder="Pincode">
+                    <label for="pincode" class="form-label">Account Name</label>
+                    <input type="text" id="pincode" name="accountholder" class="form-control" value="<?php echo esc_attr($general_setting['accountholder']); ?>" placeholder="Your Account Holder Name..">
                 </div>
 
-                <!-- GST -->
+                <!-- ABN -->
                 <div class="col-lg-6 mb-3">
-                    <label for="gst" class="form-label">GST</label>
-                    <input type="text" id="gst" name="gstz" class="form-control" value="<?php echo esc_attr($general_setting['gstz']); ?>" placeholder="Your GST Number">
-                </div>
-
-                <!-- Company Logo -->
-                <div class="col-lg-6 mb-3">
-                    <label for="fileInput" class="form-label">Your Company Logo</label>
-                    <input type="file" id="fileInput" name="fileuplordz" class="form-control">
+                    <label for="gst" class="form-label">ABN</label>
+                    <input type="text" id="gst" name="abnnumber" class="form-control" value="<?php echo esc_attr($general_setting['abnnumber']); ?>" placeholder="Your ABN Number..">
                 </div>
 
                 <!-- Submit Button -->
                 <div class="col-lg-12">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" class="btn btn-primary">
                 </div>
             </div>
         </div>
     </div>
 </form>
+ 
 <?php
 }
 function handle_invoice_general_setting_ajax() {
@@ -122,19 +120,20 @@ function handle_invoice_general_setting_ajax() {
 
     // Sanitize input
     $data = array(
-        'firstnamez'   => sanitize_text_field($_POST['firstnamez']),
-        'lastname'      => sanitize_text_field($_POST['lastname']),
-        'companyNames'  => sanitize_text_field($_POST['companyNames']),
-        'addressz'      => sanitize_text_field($_POST['addressz']),
-        'cityz'         => sanitize_text_field($_POST['cityz']),
-        'statez'        => sanitize_text_field($_POST['statez']),
-        'pincodez'      => sanitize_text_field($_POST['pincodez']),
-        'gstz'          => sanitize_text_field($_POST['gstz']),
-        'company_logo_url' => esc_url($file_url),
+        'name'   => sanitize_text_field($_POST['name']),
+        'email'      => sanitize_text_field($_POST['email']),
+        'telphone'  => sanitize_text_field($_POST['telphone']),
+        'address'      => sanitize_text_field($_POST['address']),
+        'accountno'         => sanitize_text_field($_POST['accountno']),
+        'ifscode'        => sanitize_text_field($_POST['ifscode']),
+        'accountholder'      => sanitize_text_field($_POST['accountholder']),
+        'abnnumber'          => sanitize_text_field($_POST['abnnumber']),
+
     );
 
     // Check if record exists (use appropriate WHERE clause for your logic)
-    $table_name = $wpdb->prefix . 'invoice_table'; // Adjust table name with prefix
+    $table_name = $wpdb->prefix . 'admin_details_invoice';
+
     $existing_record = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_name WHERE id = %d", 1)); // Adjust as needed
 
     if ($existing_record > 0) {
@@ -175,19 +174,22 @@ function fetch_invoice_data($general_setting) {
     global $wpdb;
 
     // Retrieve the existing record from the database
-    $table_name = $wpdb->prefix . 'invoice_table'; // Adjust the table name as needed
+    $table_name = $wpdb->prefix . 'admin_details_invoice';
+
     $invoice_data = $wpdb->get_row("SELECT * FROM $table_name WHERE id = 1"); // Adjust the WHERE clause as needed
 
     // Return the fetched data, or default values if no data found
     return array(
-        'firstnamez' => $invoice_data->firstnamez ?? '',
-        'lastname'    => $invoice_data->lastname ?? '',
-        'companyNames'=> $invoice_data->companyNames ?? '',
-        'addressz'    => $invoice_data->addressz ?? '',
-        'cityz'       => $invoice_data->cityz ?? '',
-        'statez'      => $invoice_data->statez ?? '',
-        'pincodez'    => $invoice_data->pincodez ?? '',
-        'gstz'        => $invoice_data->gstz ?? '',
-        'company_logo_url' => $invoice_data->company_logo_url ?? '',
+        'name' => $invoice_data->name ?? '',
+        'email'    => $invoice_data->email ?? '',
+        'telphone'=> $invoice_data->telphone ?? '',
+        'address'    => $invoice_data->address ?? '',
+        'accountno'       => $invoice_data->accountno ?? '',
+        'ifscode'      => $invoice_data->ifscode ?? '',
+        'accountholder'    => $invoice_data->accountholder ?? '',
+        'abnnumber'        => $invoice_data->abnnumber ?? '',
+      
     );
 }
+
+
