@@ -90,7 +90,7 @@ function create_invoice_table($table_name) {
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255),
         email VARCHAR(255),
-        telephone VARCHAR(50),
+        telphone VARCHAR(50),
         address TEXT,
         accountno VARCHAR(50),
         ifscode VARCHAR(50),
